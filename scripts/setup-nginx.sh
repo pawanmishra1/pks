@@ -26,4 +26,4 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 
 ## Setup CouchBase Database
 
-kubectl  apply -f   /resource-pk/sapp-setup/nginx-deployment.yml
+kubectl  apply -f   resource-pks/app-setup/nginx-deployment.yml
