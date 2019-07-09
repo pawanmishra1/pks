@@ -14,8 +14,6 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 ## Get PKS cluster Details
   pks get-credentials pks-lab-cluster 
 
-#  - name: Get PKS Cluster configuration
-#    command: "'KUBECONFIG=cluster.config' pks get-credentials pks-lab-cluster "
 
 ## Setup cluster details
   kubectl config use-context pks-lab-cluster
