@@ -23,9 +23,9 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 
 ## Setup CouchBase Database
 
-kubectl  apply -f app-setup/postgres-configmap.yml
+kubectl  apply -f resource-pks/app-setup/postgres-configmap.yml
 
-kubectl  apply -f app-setup/postgres-storage.yml
+kubectl  apply -f resource-pks/app-setup/postgres-storage.yml
 
-kubectl  apply -f app-setup/postgres-deployment.yml
+kubectl  apply -f resource-pks/app-setup/postgres-deployment.yml
 

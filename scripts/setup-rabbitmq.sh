@@ -21,6 +21,6 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 
 ## Setup CouchBase Database
 
-kubectl  apply -f app-setup/rabbitmq-deployment.yml
+kubectl  apply -f resource-pks/app-setup/rabbitmq-deployment.yml
 
-kubectl  apply -f app-setup/rabbitmq-svc.yml
+kubectl  apply -f resource-pks/app-setup/rabbitmq-svc.yml
