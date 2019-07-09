@@ -19,6 +19,6 @@ echo "192.168.61.102  pks.emcdigital.lab      pks.emcdigital.lab" >> /etc/hosts
   kubectl config use-context pks-lab-cluster
 
 ## Print cluster details
-  kubectl cluster-info
+#  kubectl cluster-info
 
 
