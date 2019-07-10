@@ -17,13 +17,12 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
   pks get-credentials pks-lab-cluster
 
 
-
 ## Setup cluster details
   kubectl config use-context pks-lab-cluster
 
 ## Print cluster details
   kubectl cluster-info
 
-## Setup CouchBase Database
+## Setup 4 Container Nginx Deployment
 
 kubectl  apply -f   resource-pks/app-setup/nginx-deployment.yml
