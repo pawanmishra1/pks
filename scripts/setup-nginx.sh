@@ -26,3 +26,8 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 ## Setup 4 Container Nginx Deployment
 
 kubectl  apply -f   resource-pks/app-setup/nginx-deployment.yml
+
+
+## Get Deployment status
+
+kubectl get pods 

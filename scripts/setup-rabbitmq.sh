@@ -27,3 +27,8 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 kubectl  apply -f resource-pks/app-setup/rabbitmq-deployment.yml
 
 kubectl  apply -f resource-pks/app-setup/rabbitmq-svc.yml
+
+## Get Deployment status
+
+kubectl get pods
+

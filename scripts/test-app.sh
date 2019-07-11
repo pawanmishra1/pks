@@ -19,6 +19,6 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
   kubectl config use-context pks-lab-cluster
 
 ## Print cluster details
-" echo "Funcational and Integration Test Completed"
+ echo "Funcational and Integration Test Completed"
 
 

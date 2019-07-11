@@ -29,3 +29,8 @@ kubectl  apply -f resource-pks/app-setup/cluster-role.yaml
 ## Setup CouchBase Database Client
 
 kubectl  apply -f resource-pks/app-setup/operator.yaml
+
+
+## Get Deployment Details 
+
+kubectl get pods 
