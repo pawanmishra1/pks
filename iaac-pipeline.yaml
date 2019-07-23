@@ -1,0 +1,265 @@
+---
+resources: 
+- name: resource-pks
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/pawanmishra1/pks.git
+
+jobs:
+- name: Provision PKS Cluster
+  serial: true
+  plan:
+  - get: resource-pks
+    trigger: true
+  - task: pks-cluster-setup
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-cluster.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Install CouchBase
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Provision PKS Cluster
+    trigger: true
+  - task: pks-couchbase-setup
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-couchbase.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Install Nginx
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Install CouchBase
+    trigger: true
+  - task: nginx-setup
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-nginx.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Install RabbitMQ
+  plan:
+  - get: resource-pks
+    passed:
+    - Install Nginx
+    trigger: true
+  - task: rabitmq-setup
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-rabbitmq.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Application Code Checkout
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Install RabbitMQ
+    trigger: true
+  - task: Application-code
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-app.sh
+      inputs:
+       - name: resource-pks
+
+  
+- name: Build Application
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Application Code Checkout
+    trigger: true
+  - task: build-application
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Deploy Application
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Build Application
+    trigger: true
+  - task: application-deployment
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/setup-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Static Code Analysis
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Deploy Application
+    trigger: true
+  - task: static-code-analysis
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/testcode-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Functional Testing
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Static Code Analysis
+    trigger: true
+  - task: functional-testing
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/test-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Integration Testing
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Functional Testing
+    trigger: true
+  - task: integration-testing
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/test-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Reggression Testing
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Integration Testing
+    trigger: true
+  - task: regression-testing
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/test-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Application vulnerability Scan
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Reggression Testing
+    trigger: true
+  - task: vulnerability-testing
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/scan-app.sh
+      inputs:
+      - name: resource-pks
+
+  
+- name: Smoke Testing
+  serial: true
+  plan:
+  - get: resource-pks
+    passed:
+    - Application vulnerability Scan
+    trigger: true
+  - task: smoke-testing
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pivotalservices/pks-kubectl
+      run:
+        path: resource-pks/scripts/smoketest.sh
+      inputs:
+      - name: resource-pks
+
