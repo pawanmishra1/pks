@@ -16,10 +16,10 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 
 
 ##  Setup cluster details
-  kubectl config use-context pks-lab-cluster
+#  kubectl config use-context pks-lab-cluster
 
 ##  Print cluster details
-  kubectl cluster-info
+#  kubectl cluster-info
 
 ## Setup CouchBase Database Cluster
 
