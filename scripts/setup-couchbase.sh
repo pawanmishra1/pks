@@ -16,10 +16,10 @@ pks get-credentials pks-lab-cluster
 
 
 ##  Setup cluster details
-kubectl config use-context pks-lab-cluster
+#kubectl config use-context pks-lab-cluster
 
 ##  Print cluster details
-kubectl cluster-info
+#kubectl cluster-info
 
 ## Setup CouchBase Database Cluster
 
