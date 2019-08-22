@@ -12,7 +12,7 @@ echo "192.168.61.103  pks-lab-cluster.emcdigital.lab  pks-lab-cluster"  >> /etc/
 pks login -a pks.emcdigital.lab -u appmod -p Password@123 -k
 
 ##Delete PKS Cluster
-  ## pks delete-cluster pks-lab-cluster --non-interactive --wait
+## pks delete-cluster pks-lab-cluster --non-interactive --wait
 
 ##  Create PKS Cluster
 
